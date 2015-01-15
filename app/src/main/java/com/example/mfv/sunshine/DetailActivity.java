@@ -2,25 +2,31 @@ package com.example.mfv.sunshine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 
-public class MainActivity extends ActionBarActivity
+public class DetailActivity extends ActionBarActivity
 {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_detailed_day_weather);
 		if(savedInstanceState == null)
 		{
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new ForecastFragment())
+					.add(R.id.container, new PlaceholderFragment())
 					.commit();
 		}
+
 	}
 
 
@@ -28,7 +34,7 @@ public class MainActivity extends ActionBarActivity
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_main, menu);
+		getMenuInflater().inflate(R.menu.menu_detailed_day_weather, menu);
 		return true;
 	}
 
@@ -54,5 +60,26 @@ public class MainActivity extends ActionBarActivity
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
+	public static class PlaceholderFragment extends Fragment
+	{
 
+		public PlaceholderFragment()
+		{
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+		                         Bundle savedInstanceState)
+		{
+			View rootView = inflater.inflate(R.layout.fragment_detailed_day_weather, container, false);
+			TextView textView = (TextView) rootView.findViewById(R.id.detailed_activity_textview);
+			if(savedInstanceState == null)
+			{
+				String answer = getActivity().getIntent().getExtras().getString(Intent.EXTRA_TEXT);
+				if(textView != null)
+				{ textView.setText(answer); }
+			}
+			return rootView;
+		}
+	}
 }
